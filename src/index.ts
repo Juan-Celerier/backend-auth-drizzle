@@ -19,7 +19,7 @@ app.use(
   })
 );
 
-app.options("*", cors({ origin: allowedOrigins, credentials: true }));
+// Preflight is handled by the `cors` middleware applied above.
 
 app.use(express.json());
 
