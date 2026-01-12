@@ -35,7 +35,12 @@ export const register = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Register error:", error);
     // enviar detalle mínimo en desarrollo
-    res.status(500).json({ error: "Error al registrar usuario", details: (error as Error).message });
+    res
+      .status(500)
+      .json({
+        error: "Error al registrar usuario",
+        details: (error as Error).message,
+      });
   }
 };
 
