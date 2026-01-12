@@ -6,12 +6,20 @@ import { authenticateToken } from "./middlewares/authMiddleware.js";
 
 const app = express();
 
+const allowedOrigins = [process.env.CLIENT_ORIGIN || "http://localhost:5173"];
+
 app.use(
   cors({
-    origin: true, // Allow all origins for development
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("CORS policy: Origin not allowed"));
+    },
     credentials: true,
   })
 );
+
+app.options("*", cors({ origin: allowedOrigins, credentials: true }));
 
 app.use(express.json());
 
